@@ -16,4 +16,9 @@ public class LibraryController {
     public String sighup(){
         return "welcome to sign up page";
     }
+
+    @PostMapping("/addbook")
+    public String BookAdd(){
+        return "Add your books here";
+    }
 }
