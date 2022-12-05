@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 public class LibraryController {
 
-    @PostMapping("/sighnin")
+    @PostMapping("/signin")
     public String sighin(){
         return "welcome to sign in page";
     }
 
-    @PostMapping("/sighnup")
+    @PostMapping("/signup")
     public String sighup(){
         return "welcome to sign up page";
     }
