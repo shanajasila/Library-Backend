@@ -26,4 +26,9 @@ public class LibraryController {
     public String BookSearch(){
         return "search your books here";
     }
+
+    @PostMapping("/editbook")
+    public String BookEdit(){
+        return "welcome to edit page";
+    }
 }
