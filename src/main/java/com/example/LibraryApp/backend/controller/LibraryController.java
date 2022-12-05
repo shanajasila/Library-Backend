@@ -31,4 +31,9 @@ public class LibraryController {
     public String BookEdit(){
         return "welcome to edit page";
     }
+
+    @PostMapping("/viewbook")
+    public String BookView(){
+        return "welcome to view page";
+    }
 }
