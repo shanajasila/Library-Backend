@@ -11,4 +11,9 @@ public class LibraryController {
     public String sighin(){
         return "welcome to sign in page";
     }
+
+    @PostMapping("/sighnup")
+    public String sighup(){
+        return "welcome to sign up page";
+    }
 }
