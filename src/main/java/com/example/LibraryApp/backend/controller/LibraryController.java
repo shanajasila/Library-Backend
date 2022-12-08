@@ -79,8 +79,13 @@ public class LibraryController {
 
     @CrossOrigin(origins = "*")
     @PostMapping(path = "/editbook",consumes = "application/json",produces = "application/json")
-    public String BookEdit(){
-        return "welcome to edit page";
+    public HashMap<String,String> edit(@RequestBody Book b){
+        String id=String.valueOf(b.getId());
+        System.out.println(id);
+        dao.deletebook(b.getId());
+        HashMap<String,String>map=new HashMap<>();
+        map.put("status","success");
+        return map;
     }
 
     @CrossOrigin(origins = "*")
@@ -93,6 +98,17 @@ public class LibraryController {
     @PostMapping(path = "/issuebook",consumes = "application/json",produces = "application/json")
     public String Bookissue(){
         return "issue  your books ";
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/deletebook",consumes ="application/json",produces ="application/json")
+    public HashMap<String,String> delete(@RequestBody Book b){
+        String id=String.valueOf(b.getId());
+        System.out.println(id);
+        dao.deletebook(b.getId());
+        HashMap<String,String>map=new HashMap<>();
+        map.put("status","success");
+        return map;
     }
 
 
