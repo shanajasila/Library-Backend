@@ -1,51 +1,98 @@
 package com.example.LibraryApp.backend.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.LibraryApp.backend.dao.Bookdao;
+import com.example.LibraryApp.backend.dao.SignupDao;
+import com.example.LibraryApp.backend.model.Book;
+import com.example.LibraryApp.backend.model.Signup;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 
 public class LibraryController {
 
-    @PostMapping("/signin")
-    public String sigin(){
-        return "welcome to sign in page";
+    @Autowired
+    private Bookdao dao;
+
+    @Autowired
+    private SignupDao d;
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/signin",consumes ="application/json",produces ="application/json")
+    public List<Signup> login(@RequestBody Signup i){
+        String username=String.valueOf(i.getUsername());
+        String password=String.valueOf(i.getPassword());
+        System.out.println(username);
+        System.out.println(password);
+        return(List<Signup>)d.signin(i.getUsername(),i.getPassword());
     }
 
-    @PostMapping("/signup")
-    public String sigup(){
-        return "welcome to sign up page";
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/signup",consumes ="application/json",produces ="application/json")
+    public HashMap<String,String> userRegistration(@RequestBody Signup s){
+        System.out.println(s.getName());
+        System.out.println(s.getAdhaar());
+        System.out.println(s.getAddress());
+        System.out.println(s.getEmail());
+        System.out.println(s.getDob());
+        System.out.println(s.getPincode());
+        System.out.println(s.getPhoneno());
+        System.out.println(s.getUsername());
+        System.out.println(s.getPassword());
+        System.out.println(s.getConfirmpassword());
+        d.save(s);
+        HashMap<String,String>map=new HashMap<>();
+        map.put("status","success");
+        return map;
     }
 
-    @PostMapping("/addbook")
-    public String BookAdd(){
-        return "Add your books here";
+    @CrossOrigin(origins = "*")
+    @GetMapping("/viewsignup")
+    public List<Signup> viewsignuppage(){
+        return(List<Signup>)d.findAll();
     }
 
-    @PostMapping("/searchbook")
-    public String BookSearch(){
-        return "search your books here";
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/addbook",consumes ="application/json",produces ="application/json")
+    public HashMap<String,String> addbook(@RequestBody Book b){
+        System.out.println(b.getBooktitle());
+        System.out.println(b.getAuthor());
+        System.out.println(b.getDescription());
+        System.out.println(b.getImage());
+        dao.save(b);
+        HashMap<String,String>map=new HashMap<>();
+        map.put("status","success");
+        return map;
     }
 
-    @PostMapping("/editbook")
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/searchbook",consumes = "application/json",produces = "application/json")
+    public List<Book> searchbook(@RequestBody Book b){
+        String booktitle=String.valueOf(b.getBooktitle());
+        System.out.println(booktitle);
+        dao.searchBook(b.getBooktitle());
+        return(List<Book>)dao.searchBook(b.getBooktitle());
+    }
+
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/editbook",consumes = "application/json",produces = "application/json")
     public String BookEdit(){
         return "welcome to edit page";
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/viewbook")
-    public String BookView(){
-        return "welcome to view page";
+    public List<Book> viewpage(){
+        return(List<Book>)dao.findAll();
     }
 
-    @PostMapping("/issuebook")
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/issuebook",consumes = "application/json",produces = "application/json")
     public String Bookissue(){
         return "issue  your books ";
-    }
-
-    @PostMapping("/deletebook")
-    public String BookDelete(){
-        return "welcome to book delete page";
     }
 
 
