@@ -95,5 +95,16 @@ public class LibraryController {
         return "issue  your books ";
     }
 
+    @CrossOrigin(origins = "*")
+    @PostMapping(path = "/deletebook",consumes = "application/json",produces = "application/json")
+    public HashMap<String,String> delete(@RequestBody Book d){
+        String id=String.valueOf(d.getId());
+        System.out.println(id);
+        dao.deleteBook(d.getId());
+        HashMap<String,String>map=new HashMap<>();
+        map.put("status","success");
+        return map;
+    }
+
 
 }
